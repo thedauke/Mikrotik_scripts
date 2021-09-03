@@ -34,7 +34,7 @@
 :log info "UpdateDynDNS: currentIP = $currentIP"
 
 
-# get the previous IP address from saved file dyndns.txt
+# get the previous IP address via nslookup
 :global previousIP [:resolve $hostname]     
 :log info ("UpdateDynDNS: previousIP = $previousIP")
 
@@ -42,7 +42,6 @@
 # more dyndns updater request details available at http://www.dyndns.com/developers/specs/syntax.html
 
 :if (($currentIP != $previousIP)) do={
-:set dyndnsForce false
 :set previousIP $currentIP
 /tool fetch user=$username password=$password mode=http url="http://$username:$password@members.dyndns.org/nic/update?hostname=$hostname&myip=$currentIP&wildcard=NOCHG&mx=NOCHG&backmx=NOCHG"
 :local result [/file get dyndns.txt contents]
