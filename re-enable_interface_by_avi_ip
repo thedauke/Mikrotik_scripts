@@ -1,0 +1,10 @@
+:local iptoPing ("8.8.8.8")
+:local setinterface "ether9"
+
+:if ( [/ping $iptoPing count=5 size=64 interval=2s ] =0) do={
+:log error "no ping to $iptoPing disable interface = $setinterface";
+/interface ethernet disable $setinterface;
+/delay 1s
+:log error "re-enable interface = $setinterface"; 
+/interface ethernet enable $setinterface;
+} 
